@@ -13,8 +13,58 @@
         private $user_email;
         private $user_password;
         private $user_role;
-        private $is_register = false;
-        private $is_active;//0 = false et 1 = true;
+        private $user_is_active;
+
+        //Connexion
+        public function LoginUser() : bool {
+            //Connexion a la DB
+            $db = $this->GetPDOConnexion();
+            $this->user_email = trim(htmlspecialchars($_POST["email"]));
+            $this->user_password = trim(htmlspecialchars($_POST["password"]));
+            $this->user_role = "user";
+
+            //Requete SQL find by email & role
+            $sql = "SELECT * FROM users WHERE email = ? AND role = ?";
+            $statement = $db->prepare($sql);
+            $statement->bindParam(1, $this->user_email);
+            $statement->bindParam(2, $this->user_role);
+            $statement->execute([
+                $this->user_email,
+                $this->user_role
+            ]);
+
+            //Lister les utilisateurs inscrits => au moin 1 user dans la table
+            if($statement->rowCount() >= 1){
+                $row = $statement->fetch();
+                //Redirection différente en cas de succès et de role
+                if($this->user_email == $row["email"] && password_verify($this->user_password, $row["password"]) && $this->user_role == $row["role"]){
+                    //Si role = user
+                    if($row["role"] === "user"){
+                        session_start();
+                        $_SESSION["is_login"] = true;
+                        $_SESSION["user_id"] = $row["id"];
+                        $_SESSION["email"] = $this->user_email;
+                        $_SESSION["password"] = $this->user_password;
+                        $_SESSION["role"] = $this->user_role;
+
+                        return true;
+
+                    }else{
+                        echo "Tu es connecté en tant qu' Admin";
+                        return true;
+                    }
+                }else{
+                    "<div class='alert alert-danger p-3'>Erreur lors de votre connexion, merci de verifié votre email et mot de passe 
+                        <a href='inscription'>Recommencer</a>
+                    </div>";
+                }
+            }else{
+                "<div class='alert alert-danger p-3'>Cette email est inconnu !
+                        <a href='inscription'>Recommencer</a>
+                    </div>";
+            }
+            return false;
+        }
 
         //Inscription
         public function RegsiterUser() : bool {
@@ -131,9 +181,7 @@
 
                     return $is_register;
                }else{
-                "<div class='alert alert-danger p-3'>Erreur lors de votre inscription".$e->getMessage()."
-                    <a href='inscription'>Recommencer</a>
-                </div>";
+                "<div class='alert alert-danger p-3'>Erreur lors de votre inscription</div>";
                 $is_register = false;
                 return $is_register;
                }
@@ -142,6 +190,37 @@
             $is_register = false;
             return $is_register;
       
+        }
+
+        //Change Password
+        public  function ChangeUserPassword(): bool{
+
+        }
+        //Supprimer un compte
+        public function DeleteUser(){
+            $db = $this->GetPDOConnexion();
+            $sql = "DELETE FROM users WHERE id = ?";
+            $statement = $db->prepare($sql);
+            $this->user_id = $_SESSION["user_id"];
+            $statement->bindParam(1, $this->user_id);
+            $statement->execute([
+                $this->user_id
+            ]);
+        }
+
+        //Changer de mot de passe
+        public function UpdateUser(){
+            $db = $this->GetPDOConnexion();
+            $sql = "UPDATE users SET email = ?, password = ?, role = ? WHERE id = ?";
+            if(isset($_POST["new_password"]) && !empty($_POST["new_password"])){
+                $new_password = trim(htmlspecialchars($_POST["new_password"]));
+            }
+            $statement = $db->prepare($sql);
+            $this->user_id = $_SESSION["user_id"];
+            $statement->bindParam(1, $_SESSION["email"]);
+            $statement->bindParam(2, $new_password);
+            $statement->bindParam(3, $_SESSION["role"]);
+
         }
     }
 
