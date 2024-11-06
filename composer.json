@@ -1,0 +1,17 @@
+{
+    "name": "micpi/mic_office",
+    "description": "Back Office PHP MySQL & JS",
+    "autoload": {
+        "psr-4": {
+            "Micpi\\MicOffice\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Michel Michael"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
