@@ -66,9 +66,31 @@ function RegisterUsersController(): bool
 function DeleteUserController(): bool{
     $users_model = new UsersModel();
     if(isset($_POST["btn-delete"])){
-        var_dump("Hello click");
         $users_model->DeleteUser();
         header("Location: delete_user_message");
+        return true;
+    }
+    return false;
+}
+//Mise a jour = changer de mot de passe
+function UpdateUserController() : bool{
+    $user_model = new UsersModel();
+    if(isset($_POST["btn-update"])){
+        $user_model->UpdateUser();
+        echo "<div class='alert alert-success p-3'>
+                <p>Un email vous a été envoyé pour modifier votre mot de passe !</p>
+            </div>
+            <em>Cordialement : Mic-Office Administration</em>";
+        return true;
+    }
+    return false;
+}
+
+//Valider le nouveau mot de passe
+function ValidateNewPasswordController(): bool{
+    $user_model = new UsersModel();
+    if(isset($_POST["btn-change-password"])){
+        $user_model->ValidateNewPassword();
         return true;
     }
     return false;

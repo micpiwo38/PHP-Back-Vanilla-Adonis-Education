@@ -15,6 +15,6 @@
     <a href="inscription">S'inscrire</a>
     </div>
     <hr>
-        <a href="">Mot de passe oublié ?</a>
+        <a href="update_user_message">Mot de passe oublié ?</a>
     </form>
 </div>

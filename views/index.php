@@ -16,11 +16,11 @@ if(isset($_GET["url"])){
     $url == "connexion";
 }
 
+
+
 //ROUTES
 
-if($url === "" && !$_SESSION["is_login"]){
-    header("Location: connexion");
-}elseif($url === "connexion"){
+if($url === "connexion"){
     $title = "Mic-Office : Connexion";
     LoginUsersController();
     require_once "users/login.php";
@@ -35,10 +35,25 @@ if($url === "" && !$_SESSION["is_login"]){
 }elseif ($url === "delete_user_message" && $_SESSION["is_login"]){
     $title = "Mic-Office : Compte Supprimer";
     require_once "users/delete_user_message.php";
+}elseif ($url === "update_user_message"){
+    $title = "Mic-Office : Modification mot de passe";
+    require_once "users/update_user_message.php";
+    UpdateUserController();
+}elseif ($url === "change_password"){
+    $title = "Mic-Office : Entrer nouveau mot de passe";
+    require_once "users/change_password.php";
+    ValidateNewPasswordController();
+
 }elseif ($url === "deconnexion" && $_SESSION["is_login"]){
 
     require_once "users/logout.php";
+}//On effectue une redirection si url ne correspond a aucune route via des regexs
+
+ elseif($url !=  '#:@&-[\w]+)#'){
+    //On redirige vers la page d'accueil
+    header("Location: connexion");
 }
+
 
 //Template
 $content = ob_get_clean();

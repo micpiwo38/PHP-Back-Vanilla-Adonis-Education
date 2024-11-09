@@ -13,7 +13,7 @@
         private $user_email;
         private $user_password;
         private $user_role;
-        private $user_is_active;
+        private $user_is_active = 0;
 
         //Connexion
         public function LoginUser() : bool {
@@ -83,7 +83,7 @@
             }else{
                 echo "<div class='alert alert-danger p-3'>Merci de remplir tous les champs !</div>";
             }
-       
+
             //SQL
             //Check user already exist
             $sql_user_exist = "SELECT * FROM users WHERE email = ?";
@@ -163,7 +163,7 @@
                         </body>
                         </html>
                         ';
-      
+
                 //Envoi de email
                 $phpmailer->send();
                  //Message de succes + bouton pour aller a la connexion
@@ -189,7 +189,7 @@
             }
             $is_register = false;
             return $is_register;
-      
+
         }
 
         //Change Password
@@ -208,19 +208,139 @@
             ]);
         }
 
-        //Changer de mot de passe
-        public function UpdateUser(){
+        //Envoyer email changement de mot de passe
+        public function UpdateUser()
+        {
             $db = $this->GetPDOConnexion();
-            $sql = "UPDATE users SET email = ?, password = ?, role = ? WHERE id = ?";
-            if(isset($_POST["new_password"]) && !empty($_POST["new_password"])){
-                $new_password = trim(htmlspecialchars($_POST["new_password"]));
-            }
+            $this->user_email = trim(htmlspecialchars($_POST["email"]));
+            $sql = "SELECT * FROM users WHERE email = ?";
             $statement = $db->prepare($sql);
-            $this->user_id = $_SESSION["user_id"];
-            $statement->bindParam(1, $_SESSION["email"]);
-            $statement->bindParam(2, $new_password);
-            $statement->bindParam(3, $_SESSION["role"]);
+            $statement->bindParam(1, $this->user_email);
+            $password_update = $statement->execute([$this->user_email]);
 
+            if ($password_update) {
+                //Instance de la classe PHPMailer
+                $phpmailer = new PHPMailer();
+                try {
+                    //CONFIGURATION PHPMAILET -> Hote = MailTrap
+                    $phpmailer->isSMTP(); //Protocole Simlpe Mail Transport Protocol
+                    $phpmailer->Host = 'sandbox.smtp.mailtrap.io'; // hote mailtrap => https://mailtrap.io/inboxes/1163067/messages
+                    $phpmailer->SMTPAuth = true; // autorise et impose email + password
+                    $phpmailer->Port = 2525; // Port SMPT
+                    $phpmailer->Username = '5c8396efb85ec3'; //User => mailtrap
+                    $phpmailer->Password = 'f26eb6f125373d'; //Password mailtrap
+                    $phpmailer->setLanguage('fr', '../vendor/phpmailer/phpmailer/language/');
+                    $phpmailer->CharSet = 'UTF-8';
+
+                    //Envoyeur et destinataire
+                    $phpmailer->setFrom('mic_office@gmail.com', ' Administration Mic_Office');
+                    $phpmailer->addAddress('mic_office@gmail.com', 'Administrateur Mic_Office.com');
+                    $phpmailer->addReplyTo('mic_office@gmail.com', 'Administration Mic_Office');
+                    //Format HTML
+                    $phpmailer->isHTML(true);
+                    //ATTENTION on passe de mailTrap a notre site URL est absolue = localhost/votreprojet/route + email concerné + id unique
+                    $redirect = "http://127.0.0.1/mic_office/change_password?key=".$this->user_email."&id=".uniqid();
+                    //Corp de la page HTML5 = ici le css est dans les balises
+                    $phpmailer->Body = '
+                        <!DOCTYPE html>
+                        <html lang="fr">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="Content-Type" content="text/html">
+                            <title>Changer mot de passe Mic_Office.com</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        </head>
+                        <body style="color: #43617f; font-size: 22px;text-align: center; padding: 20px">
+                        <div style="padding: 20px;">
+                            <img src="https://t3.ftcdn.net/jpg/04/77/73/44/360_F_477734432_l1srDtzmuvtWUTkt6BVaRJ2mW2faXdTo.jpg" width="64px" height="64px" alt="" title="mic_office.com">
+                        </div>
+                        <div style="padding: 20px;">
+                            <h1>Mic_Office.com</h1>
+                            <h2>Bonjour : ' . $this->user_email . '</h2>
+                            <p>Vous pouvez modifier votre mot de passe avec le liens suivant</p><br />
+                            
+                            <br /><br />
+                            <a href="' . $redirect . '" style="background-color: darkred; color: #F0F1F2; padding: 20px; text-decoration: none;">Modifier votre mot de passe</a><br />
+                            <br /><br />                      
+                            <p style="color: #43617f;">Merci d\'utiliser notre site web</p>
+                            <p style="color: #43617f;">Cordialement : Annonces.com: Michael MICHEL : Administrateur</p>    
+                        </div>
+                        </body>
+                        </html>
+                        ';
+
+                    //Envoi de email
+                    $phpmailer->send();
+                }catch(Exception $e){
+                    "<div class='alert alert-danger p-3'>Erreur lors de votre inscription".$e->getMessage()."
+                        <a href='inscription'>Recommencer</a>
+                    </div>";
+                }
+                return true;
+            }
+            return  false;
+        }
+
+        //Valider le nouveau mot de passe UPDATE
+        public function ValidateNewPassword() : bool{
+            $db = $this->GetPDOConnexion();
+            //Check user exist = email dans URL
+            $this->user_email = $_GET["key"];
+            $this->user_role = "user";
+            $unique_id = $_GET["id"];
+            $sql_users_exist = "SELECT * FROM users WHERE email = ?";
+            $check_user_exist = $db->prepare($sql_users_exist);
+            $check_user_exist->bindParam(1, $this->user_email);
+            $check_user_exist->execute([$this->user_email]);
+            $user = $check_user_exist->fetch();
+            if(!$user && $unique_id){
+                echo "<div class='alert alert-danger p-3'>Cet email est inconnu !
+                    <a href='inscription'>Recommencer</a>
+                </div>";
+            }else {
+                //Champ du formulaire
+                //PASSWORD
+                if (isset($_POST["new_password"]) && !empty($_POST["new_password"])) {
+                    $this->user_password = trim(htmlspecialchars($_POST["new_password"]));
+                } else {
+                    echo "<div class='alert alert-danger p-3'>Merci de remplir tous les champs !</div>";
+                }
+                $sql = "UPDATE users SET email = ?, password = ?, role = ?, is_active = ? WHERE id = ?";
+                //Param ID unique dans url
+                $this->user_id = $user["id"];
+                var_dump($user["id"]);
+                $hash_password = password_hash($this->user_password, PASSWORD_DEFAULT);
+                $statement = $db->prepare($sql);
+                $statement->bindParam(1, $this->user_email);
+                $statement->bindParam(2, $hash_password);
+                $statement->bindParam(3, $this->user_role);
+                $statement->bindParam(4, $this->user_is_active);
+                $statement->bindParam(5, $this->user_id);
+
+                $new_password = $statement->execute([
+                    $this->user_email,
+                    $hash_password,
+                    $this->user_role,
+                    $this->user_is_active,
+                    $this->user_id
+                ]);
+                var_dump($statement);
+                if ($new_password) {
+
+                    var_dump($this->user_id);
+                    echo "<div class='alert alert-success p-3'>
+                        Votre mot de passe a bien été modifié
+                        <a href='connexion'>Connexion</a>
+                    </div>";
+                    return true;
+                } else {
+                    echo "<div class='alert alert-danger p-3'>
+                        Erreur lors de la modification de mot de passe                
+                    </div>";
+                }
+            }
+
+            return false;
         }
     }
 
