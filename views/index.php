@@ -59,6 +59,11 @@ if($url === "connexion"){
     $title = "Mic-Office : Ajouter un produit";
     require_once "products_user/ajouter_produit.php";
     AddProductController();
+}elseif ($url === "detail-product-user" && $_SESSION["is_login"]){
+    $title = "Mic-Office : Détails du produit";
+    require_once "products_user/details_user_produit.php";
+}elseif ($url === "supprimer-produits" && $_SESSION["is_login"]){
+    DeleteUserProductWithImagesController();
 }
 //On effectue une redirection si url ne correspond a aucune route via des regexs
 elseif($url !=  '#:@&-[\w]+)#'){

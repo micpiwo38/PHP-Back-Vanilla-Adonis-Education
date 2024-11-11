@@ -15,7 +15,7 @@
                 </form>
 
                 <h3 class="text-warning mt-3">Gestion de vos données :</h3>
-                <a href="liste-produits" class="btn btn-success mt-3">Gerer vos produits</a>
+                <a href="liste-produits-utilisateur" class="btn btn-success mt-3">Gerer vos produits</a>
             </div>
 
         <?php

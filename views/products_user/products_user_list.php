@@ -54,7 +54,7 @@
                     <td><?= $product["product_category"]  ?></td>
                     <td><?= $product["product_stock"]  ?></td>
                     <td>
-                        <a href="#" class="btn btn-warning">Détails</a>
+                        <a href="detail-product-user?id=<?= $product["product_id"]?>" class="btn btn-warning">Détails</a>
                     </td>
                 </tr>
                 <?php

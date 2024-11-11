@@ -13,7 +13,7 @@
                 <a class="nav-link" href="liste-produits">TOUS LES PRODUITS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="liste-produits-utilisateur">Gestion de vos produits</a>
+                <a class="nav-link" href="liste-produits-utilisateur">GERER VOS PRODUITS</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -22,7 +22,7 @@
             <?php
                 if($_SESSION["is_login"]){
                     ?>
-                    <a href="deconnxion" class="btn btn-outline-danger mx-2 my-2 my-sm-0" type="submit">DECONNEXION</a>
+                    <a href="deconnexion" class="btn btn-outline-danger mx-2 my-2 my-sm-0" type="submit">DECONNEXION</a>
                     <?php
                 }
             ?>

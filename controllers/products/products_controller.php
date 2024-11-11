@@ -105,3 +105,52 @@ function AddProductController(){
     }
 
 }
+
+//Afficher les details d'un produit par utilisateur
+function DisplayDetailsUserProductController(){
+    $product_model = new Products_model();
+    $product_id = $_GET["id"];
+    $products_data = $product_model->DisplayUserProductDetails($product_id);
+    //Tableau d'images
+    $products_with_images = [];
+
+    if($products_data){
+        //Ajouter le produit au tableau d'image
+        $products_with_images = [
+                "product_id" => $products_data["product_id"],
+                "product_name" => $products_data["product_name"],
+                "product_description" => $products_data["product_description"],
+                "product_price" => $products_data["product_price"],
+                "product_category" => $products_data["category_name"],
+                "product_stock" => $products_data["product_stock"],
+                "product_owner" => $products_data["email"],
+                "images" => []
+            ];
+
+        $product_images = $product_model->DisplayImageByProduct($product_id);
+
+        foreach ($product_images as $image){
+            $products_with_images["images"][] = [
+                "image_id" => $image["image_id"],
+                'images_name' => $image["images_name"]
+            ];
+        }
+    }
+    return $products_with_images;
+
+}
+
+//Supprimer un produit et ses images
+function DeleteUserProductWithImagesController(){
+    $product_model = new Products_model();
+    $product_id = $_GET["id"];
+    $delete_product = $product_model->DeleteUserProductWithImages($product_id);
+    if($delete_product){
+        ?>
+            <script>
+                confirm("Confirmer la supression de ce produit !")
+            </script>
+        <?php
+        header("Location : liste-produits-utilisateur");
+    }
+}
