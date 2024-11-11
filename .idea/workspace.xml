@@ -20,14 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d79072a5-4825-4952-9ea5-e9dbcd6eba7c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/users/change_password.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/users/update_user_message.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/products/products_controller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/products/products_model.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/snes.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/super_nintendo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/table_bois.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/navbar.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/products/products_list.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/users/users_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/users/users_controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/users/users_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/users/users_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/users/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/template.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/template.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/users/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/users/update_user_message.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/update_user_message.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +47,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="composer.json" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -70,6 +76,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -88,7 +95,8 @@
       <updated>1730888922541</updated>
       <workItem from="1730888924205" duration="7898000" />
       <workItem from="1730969222844" duration="2044000" />
-      <workItem from="1731146909603" duration="7028000" />
+      <workItem from="1731146909603" duration="15884000" />
+      <workItem from="1731316557365" duration="6102000" />
     </task>
     <servers />
   </component>
@@ -119,28 +127,17 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="552" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1730890068637" />
-    <state x="794" y="439" key="NewPhpFileDialog" timestamp="1730969948129">
+    <state x="751" y="239" key="NewPhpClassDialog" timestamp="1731166506363">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="794" y="439" key="NewPhpFileDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1730969948129" />
+    <state x="751" y="239" key="NewPhpClassDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731166506363" />
+    <state x="794" y="439" key="NewPhpFileDialog" timestamp="1731166935106">
+      <screen x="0" y="0" width="1920" height="1032" />
+    </state>
+    <state x="794" y="439" key="NewPhpFileDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731166935106" />
     <state x="461" y="161" key="SettingsEditor" timestamp="1730889903729">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="461" y="161" key="SettingsEditor/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1730889903729" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php-line-method">
-          <url>file://$PROJECT_DIR$/models/users/users_model.php</url>
-          <line>211</line>
-          <properties>
-            <option name="className" value="\UsersModel" />
-            <option name="methodName" value="UpdateUser" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

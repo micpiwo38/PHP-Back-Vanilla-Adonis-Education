@@ -1,6 +1,11 @@
+<div class="container-fluid">
+    <?php require_once "./navbar.php"?>
+</div>
+
 <?php
     if($_SESSION["is_login"]){
         ?>
+
             <div class="container shadow rounded w-50 mt-5 p-3 ">
                 <h1 class="text-success">Bienvenue : <?= $_SESSION["email"] ?></h1>
                 <a href="deconnexion" class="btn btn-warning mt-3">DECONNEXION</a>
@@ -10,6 +15,7 @@
                 </form>
 
                 <h3 class="text-warning mt-3">Gestion de vos données :</h3>
+                <a href="liste-produits" class="btn btn-success mt-3">Gerer vos produits</a>
             </div>
 
         <?php

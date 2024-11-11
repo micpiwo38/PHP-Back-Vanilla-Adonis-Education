@@ -7,6 +7,7 @@ ob_start();
 
 //APPEL DES CONTROLLERS
 require_once "../controllers/users/users_controller.php";
+require_once "../controllers/products/products_controller.php";
 
 $url = "";
 //Recuperer URL du navigateur avec la Super Globale $_GET
@@ -19,7 +20,7 @@ if(isset($_GET["url"])){
 
 
 //ROUTES
-
+/*----------------------------------------USERS------------------------------------------*/
 if($url === "connexion"){
     $title = "Mic-Office : Connexion";
     LoginUsersController();
@@ -43,13 +44,15 @@ if($url === "connexion"){
     $title = "Mic-Office : Entrer nouveau mot de passe";
     require_once "users/change_password.php";
     ValidateNewPasswordController();
-
 }elseif ($url === "deconnexion" && $_SESSION["is_login"]){
-
     require_once "users/logout.php";
-}//On effectue une redirection si url ne correspond a aucune route via des regexs
-
- elseif($url !=  '#:@&-[\w]+)#'){
+    /*----------------------------------------PRODUITS------------------------------------------*/
+}elseif ($url === "liste-produits" && $_SESSION["is_login"]){
+    $title = "Mic-Office : Vos produits";
+    require_once "products/products_list.php";
+}
+//On effectue une redirection si url ne correspond a aucune route via des regexs
+elseif($url !=  '#:@&-[\w]+)#'){
     //On redirige vers la page d'accueil
     header("Location: connexion");
 }

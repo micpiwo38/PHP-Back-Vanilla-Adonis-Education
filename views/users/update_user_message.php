@@ -8,5 +8,6 @@
             <input type="email" id="email" name="email" class="form-control" />
         </div>
         <button name="btn-update" class="btn btn-success mt-3">Changer le mot de passe</button>
+        <a href="connexion" class="btn btn-warning mt-3">Annuler</a>
     </form>
 </div>

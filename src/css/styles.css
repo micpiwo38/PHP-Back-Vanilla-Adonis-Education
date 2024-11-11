@@ -1,0 +1,28 @@
+
+/*GLOBALS*/
+html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/*CAROUSSEL*/
+/* Surcharge la couleur de l'icône de navigation du carrousel - icône précédente */
+
+.carousel-control-prev-icon{
+    background-image: none; /* Retire l'icône SVG par défaut */
+    background-color: rgba(45, 46, 48, 0.8); /* Ajoute une couleur personnalisée */
+    width: 50px; /* Largeur de l'icône */
+    height: 50px; /* Hauteur de l'icône */
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L6.707 7l4.647 4.646a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+    mask-size: cover;
+}
+
+/* Surcharge la couleur de l'icône de navigation du carrousel - icône suivante */
+.carousel-control-next-icon {
+    background-image: none;
+    background-color: rgba(45, 46, 48, 0.8); /* Ajoute une couleur personnalisée */
+    width:50px;
+    height: 50px;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L9.293 7 4.646 2.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    mask-size: cover;
+}
