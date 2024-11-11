@@ -7,7 +7,7 @@
     require_once "../vendor/phpmailer/phpmailer/src/PHPMailer.php";
     require_once "../vendor/phpmailer/phpmailer/src/SMTP.php";
 
-    class UsersModel extends Database{
+    class UsersModel{
 
         private $user_id;
         private $user_email;
@@ -15,17 +15,23 @@
         private $user_role;
         private $user_is_active = 0;
 
+        private PDO $db;
+
+        //Connexion a l'aide du singleton
+        public function __construct()
+        {
+            $this->db = Database::getPDOInstance()->GetPDOConnexion();
+        }
+
         //Connexion
         public function LoginUser() : bool {
-            //Connexion a la DB
-            $db = $this->GetPDOConnexion();
             $this->user_email = trim(htmlspecialchars($_POST["email"]));
             $this->user_password = trim(htmlspecialchars($_POST["password"]));
             $this->user_role = "user";
 
             //Requete SQL find by email & role
             $sql = "SELECT * FROM users WHERE email = ? AND role = ?";
-            $statement = $db->prepare($sql);
+            $statement = $this->db->prepare($sql);
             $statement->bindParam(1, $this->user_email);
             $statement->bindParam(2, $this->user_role);
             $statement->execute([
@@ -68,8 +74,6 @@
 
         //Inscription
         public function RegsiterUser() : bool {
-            //Connexion a la DB => Classe parente
-            $db = $this->GetPDOConnexion();
             //Champs du formulaire
             if(isset($_POST["email"]) && !empty($_POST["email"])){
                 $this->user_email = trim(htmlspecialchars($_POST["email"]));
@@ -87,7 +91,7 @@
             //SQL
             //Check user already exist
             $sql_user_exist = "SELECT * FROM users WHERE email = ?";
-            $check_user_exist = $db->prepare($sql_user_exist);
+            $check_user_exist = $this->db->prepare($sql_user_exist);
             $check_user_exist->execute([$this->user_email]);
             $users = $check_user_exist->fetch();
             if($users){
@@ -98,7 +102,7 @@
                 $sql = "INSERT INTO users (email, password, role) VALUES (?,?,?)";
                 //Role par defaut
                 $this->user_role = "user";
-                $statement = $db->prepare($sql);
+                $statement = $this->db->prepare($sql);
                 $statement->bindParam(1, $this->user_email);
                 $hash_password = password_hash($this->user_password, PASSWORD_DEFAULT);
                 $statement->bindParam(2, $hash_password);
@@ -192,15 +196,11 @@
 
         }
 
-        //Change Password
-        public  function ChangeUserPassword(): bool{
 
-        }
         //Supprimer un compte
         public function DeleteUser(){
-            $db = $this->GetPDOConnexion();
             $sql = "DELETE FROM users WHERE id = ?";
-            $statement = $db->prepare($sql);
+            $statement = $this->db->prepare($sql);
             $this->user_id = $_SESSION["user_id"];
             $statement->bindParam(1, $this->user_id);
             $statement->execute([
@@ -211,10 +211,10 @@
         //Envoyer email changement de mot de passe
         public function UpdateUser()
         {
-            $db = $this->GetPDOConnexion();
+
             $this->user_email = trim(htmlspecialchars($_POST["email"]));
             $sql = "SELECT * FROM users WHERE email = ?";
-            $statement = $db->prepare($sql);
+            $statement = $this->db->prepare($sql);
             $statement->bindParam(1, $this->user_email);
             $password_update = $statement->execute([$this->user_email]);
 
@@ -283,13 +283,12 @@
 
         //Valider le nouveau mot de passe UPDATE
         public function ValidateNewPassword() : bool{
-            $db = $this->GetPDOConnexion();
             //Check user exist = email dans URL
             $this->user_email = $_GET["key"];
             $this->user_role = "user";
             $unique_id = $_GET["id"];
             $sql_users_exist = "SELECT * FROM users WHERE email = ?";
-            $check_user_exist = $db->prepare($sql_users_exist);
+            $check_user_exist = $this->db->prepare($sql_users_exist);
             $check_user_exist->bindParam(1, $this->user_email);
             $check_user_exist->execute([$this->user_email]);
             $user = $check_user_exist->fetch();
@@ -310,7 +309,7 @@
                 $this->user_id = $user["id"];
                 var_dump($user["id"]);
                 $hash_password = password_hash($this->user_password, PASSWORD_DEFAULT);
-                $statement = $db->prepare($sql);
+                $statement = $this->db->prepare($sql);
                 $statement->bindParam(1, $this->user_email);
                 $statement->bindParam(2, $hash_password);
                 $statement->bindParam(3, $this->user_role);

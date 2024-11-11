@@ -8,14 +8,14 @@
     ?>
     <div class="row">
         <?php foreach ($productsWithImages as $product): ?>
-            <div class="col-md-3 col-mx-12 mx-3">
-                <div class="card" style="width: 18rem;">
+            <div class="col-md-3 col-mx-12 mx-3 mx-auto">
+                <div class="card h-100" style="width: 18rem;">
                     <!-- Carrousel Bootstrap -->
                     <div id="carouselProduct<?= $product["product_id"] ?>" class="carousel slide">
                         <div class="carousel-inner">
                             <?php foreach ($product['images'] as $index => $image): ?>
                                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                    <img class="d-block w-100" src="./src/images/<?= ($image["images_name"]) ?>" alt="<?= $product["product_name"] ?>" title="<?= $product["product_name"] ?>">
+                                    <img width="100%" class="p-5 img-fluid" src="./src/images/<?= ($image["images_name"]) ?>" alt="<?= $product["product_name"] ?>" title="<?= $product["product_name"] ?>">
                                 </div>
                             <?php endforeach; ?>
                         </div>

@@ -13,7 +13,7 @@
                 <a class="nav-link" href="liste-produits">TOUS LES PRODUITS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="vos-produits">Vos produits</a>
+                <a class="nav-link" href="liste-produits-utilisateur">Gestion de vos produits</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

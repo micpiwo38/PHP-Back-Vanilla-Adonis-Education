@@ -1,7 +1,5 @@
 <?php
-    require_once "../models/database.php";
-    $db = new Database();
-    $db->GetPDOConnexion();
+
 ?>
 
 

@@ -8,6 +8,8 @@ ob_start();
 //APPEL DES CONTROLLERS
 require_once "../controllers/users/users_controller.php";
 require_once "../controllers/products/products_controller.php";
+require_once "../controllers/categories/categories_controller.php";
+
 
 $url = "";
 //Recuperer URL du navigateur avec la Super Globale $_GET
@@ -50,6 +52,13 @@ if($url === "connexion"){
 }elseif ($url === "liste-produits" && $_SESSION["is_login"]){
     $title = "Mic-Office : Vos produits";
     require_once "products/products_list.php";
+}elseif ($url === "liste-produits-utilisateur" && $_SESSION["is_login"]){
+    $title = "Mic-Office : Gestion de vos produit";
+    require_once "products_user/products_user_list.php";
+}elseif ($url === "ajouter-produit" && $_SESSION["is_login"]){
+    $title = "Mic-Office : Ajouter un produit";
+    require_once "products_user/ajouter_produit.php";
+    AddProductController();
 }
 //On effectue une redirection si url ne correspond a aucune route via des regexs
 elseif($url !=  '#:@&-[\w]+)#'){
