@@ -20,16 +20,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d79072a5-4825-4952-9ea5-e9dbcd6eba7c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/products_user/details_user_produit.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/administration/admin_controller.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/administration/administration.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/images/images_model.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/administration/admin_home.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/products_user/edit_user_product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/categories/categories_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/categories/categories_controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/products/products_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/products/products_controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/users/users_controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/users/users_controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/categories/categories_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/categories/categories_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/products/products_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/products/products_model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/dev.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/dev2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/users/users_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/users/users_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/tintin.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/tintin.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/tintin_2.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/views/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/navbar.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/navbar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/products_user/products_user_list.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/products_user/products_user_list.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/users/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/products_user/ajouter_produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/products_user/add_product.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/products_user/details_user_produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/products_user/details_user_produit.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +102,7 @@
       <workItem from="1730969222844" duration="2044000" />
       <workItem from="1731146909603" duration="15884000" />
       <workItem from="1731316557365" duration="24551000" />
+      <workItem from="1731571924978" duration="13225000" />
     </task>
     <servers />
   </component>
@@ -124,14 +133,14 @@
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
     <state x="552" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1730890068637" />
-    <state x="751" y="239" key="NewPhpClassDialog" timestamp="1731330750460">
+    <state x="751" y="239" key="NewPhpClassDialog" timestamp="1731581989242">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="751" y="239" key="NewPhpClassDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731330750460" />
-    <state x="794" y="439" key="NewPhpFileDialog" timestamp="1731329018528">
+    <state x="751" y="239" key="NewPhpClassDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731581989242" />
+    <state x="794" y="439" key="NewPhpFileDialog" timestamp="1731576704648">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="794" y="439" key="NewPhpFileDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731329018528" />
+    <state x="794" y="439" key="NewPhpFileDialog/-1920.0.1920.1032/0.0.1920.1032@0.0.1920.1032" timestamp="1731576704648" />
     <state x="461" y="161" key="SettingsEditor" timestamp="1730889903729">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>

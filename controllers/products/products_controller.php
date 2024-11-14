@@ -135,6 +135,8 @@ function DisplayDetailsUserProductController(){
                 'images_name' => $image["images_name"]
             ];
         }
+    }else{
+        header("Location: liste-produits-utilisateur");
     }
     return $products_with_images;
 
@@ -146,11 +148,38 @@ function DeleteUserProductWithImagesController(){
     $product_id = $_GET["id"];
     $delete_product = $product_model->DeleteUserProductWithImages($product_id);
     if($delete_product){
-        ?>
-            <script>
-                confirm("Confirmer la supression de ce produit !")
-            </script>
-        <?php
         header("Location : liste-produits-utilisateur");
+    }
+}
+
+//Editer un produit par utilisateur connecter
+function EditUserProductController(){
+    $product_model = new Products_model();
+    if(isset($_POST["btn-edit-product"])){
+        //Champ du formulaire
+        $product_name = trim(htmlspecialchars($_POST["product_name"]));
+        $product_description = trim(htmlspecialchars($_POST["product_description"]));
+        $product_price = trim(htmlspecialchars($_POST["product_price"]));
+        $product_category = trim(htmlspecialchars($_POST["product_category"]));
+        $product_stock = trim(htmlspecialchars($_POST["product_stock"]));
+        $product_owner = $_SESSION["user_id"];
+
+        //Les images
+        $images = $_FILES["images_name"];
+        $product_id = $product_model->EditUserProduct(
+            $product_name,
+            $product_description,
+            $product_price,
+            $product_category,
+            $product_stock,
+            $product_owner,
+            $images
+        );
+
+        if($product_id){
+            header("Location: liste-produits-utilisateur");
+        }else{
+            echo "<div class='alert alert-danger p-3'>Erreur lors de la mise à jour de votre produit !</div>";
+        }
     }
 }

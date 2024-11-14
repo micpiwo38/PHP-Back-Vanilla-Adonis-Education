@@ -113,11 +113,12 @@ class Products_model
                     LEFT JOIN users ON products.product_owner = users.id
                     LEFT JOIN categories ON products.product_category = categories.category_id
                     LEFT JOIN images ON products.product_id = images.id_product 
-                    WHERE products.product_id = ?
+                    WHERE products.product_id = ? AND product_owner = ?
                 ";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(1, $this->product_id);
-        $statement->execute([$product_id]);
+        $statement->bindParam(2, $_SESSION["user_id"]);
+        $statement->execute([$product_id, $_SESSION["user_id"]]);
         $details_product = $statement->fetch();
         return $details_product;
     }
@@ -150,5 +151,42 @@ class Products_model
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(1, $product_id);
         $stmt->execute();
+    }
+
+    //Editer un produit utilisateur
+    public function EditUserProduct(
+        string $product_name,
+        string $product_description,
+        float $product_price,
+        int $product_category,
+        int $product_stock,
+        int $product_owner,
+        array $images
+    ){
+        //Datas
+        //Champ du formulaire
+        $this->product_name = $product_name;
+        $this->product_description = $product_description;
+        $this->product_price = $product_price;
+        $this->product_category = $product_category;
+        $this->product_stock = $product_stock;
+        $this->product_images = $images;
+        $_SESSION["user_id"] = $product_owner;
+        $this->product_owner = $_SESSION["user_id"];
+
+        $sql = "UPDATE products SET 
+            product_name = ?,
+            product_description = ?,
+            product_price = ?,
+            product_category = ?,
+            product_stock = ?,
+            product_owner = ? 
+            WHERE product_id = ? AND product_owner = ?";
+
+        $this->product_id = $_GET["id"];
+        $images_services = new Upload_multiple_files();
+        $images_services->updload_multiple_images($this->product_id, $this->product_images);
+
+        return $this->product_id;
     }
 }

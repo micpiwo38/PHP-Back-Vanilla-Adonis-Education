@@ -20,9 +20,17 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
             <?php
-                if($_SESSION["is_login"]){
+                if($_SESSION["is_login"] == false && $_SESSION["is_admin"] == false){
                     ?>
-                    <a href="deconnexion" class="btn btn-outline-danger mx-2 my-2 my-sm-0" type="submit">DECONNEXION</a>
+                        <a href="connexion" class="mx-3 btn btn-warning">CONNEXION</a>
+                    <?php
+                }elseif($_SESSION["is_login"]){
+                    ?>
+                    <a href="laura@yahoo.fr" class="mx-3 btn btn-warning">DECONNEXION</a>
+                    <?php
+                }elseif ($_SESSION["is_admin"]){
+                    ?>
+                    <a href="deconnexion" class="mx-3 btn btn-warning">DECONNEXION</a>
                     <?php
                 }
             ?>

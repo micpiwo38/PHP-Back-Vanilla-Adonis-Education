@@ -17,9 +17,7 @@ function LoginUsersController(): bool
                         <hr>
                 </div>";
             }
-
         }
-
     }
     return false;
 }
@@ -92,6 +90,28 @@ function ValidateNewPasswordController(): bool{
     if(isset($_POST["btn-change-password"])){
         $user_model->ValidateNewPassword();
         return true;
+    }
+    return false;
+}
+
+//CONNEXION ADMINISTRATEUR
+function LoginAsAdminController(){
+    $user_model = new UsersModel();
+    if(isset($_POST["btn-login"])){
+        if(isset($_POST["email"]) && isset($_POST["password"])){
+            if($user_model->LoginAdmin()){
+                if($_SESSION["is_admin"]){
+                    header("Location: administration");
+                    return true;
+                }
+            }else{
+                echo "<div class='alert alert-danger p-3'>Erreur lors de votre tentative de connexion ! Merci de vérifié votre email et mot de passe !
+                        <hr>
+                            <a href='connexion' class='btn btn-warning mt-3'>Recommencer</a>
+                        <hr>
+                </div>";
+            }
+        }
     }
     return false;
 }

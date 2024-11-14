@@ -22,7 +22,6 @@
         {
             $this->db = Database::getPDOInstance()->GetPDOConnexion();
         }
-
         //Connexion
         public function LoginUser() : bool {
             $this->user_email = trim(htmlspecialchars($_POST["email"]));
@@ -71,7 +70,6 @@
             }
             return false;
         }
-
         //Inscription
         public function RegsiterUser() : bool {
             //Champs du formulaire
@@ -195,8 +193,6 @@
             return $is_register;
 
         }
-
-
         //Supprimer un compte
         public function DeleteUser(){
             $sql = "DELETE FROM users WHERE id = ?";
@@ -207,7 +203,6 @@
                 $this->user_id
             ]);
         }
-
         //Envoyer email changement de mot de passe
         public function UpdateUser()
         {
@@ -280,7 +275,6 @@
             }
             return  false;
         }
-
         //Valider le nouveau mot de passe UPDATE
         public function ValidateNewPassword() : bool{
             //Check user exist = email dans URL
@@ -341,6 +335,56 @@
 
             return false;
         }
+        //Connexion ADMINSTRATEUR
+        public function LoginAdmin() : bool {
+            $this->user_email = trim(htmlspecialchars($_POST["email"]));
+            $this->user_password = trim(htmlspecialchars($_POST["password"]));
+            $this->user_role = "admin";
+
+            //Requete SQL find by email & role
+            $sql = "SELECT * FROM users WHERE email = ? AND role = ?";
+            $statement = $this->db->prepare($sql);
+            $statement->bindParam(1, $this->user_email);
+            $statement->bindParam(2, $this->user_role);
+            $statement->execute([
+                $this->user_email,
+                $this->user_role
+            ]);
+
+            //Lister les utilisateurs inscrits => au moin 1 user dans la table
+            if($statement->rowCount() >= 1){
+                $row = $statement->fetch();
+                //Redirection différente en cas de succès et de role
+                if($this->user_email == $row["email"] && password_verify($this->user_password, $row["password"]) && $this->user_role == $row["role"]){
+                    //Si role = user
+                    if($row["role"] === "admin"){
+                        session_start();
+                        $_SESSION["is_admin"] = true;
+                        $_SESSION["user_id"] = $row["id"];
+                        $_SESSION["email"] = $this->user_email;
+                        $_SESSION["password"] = $this->user_password;
+                        $_SESSION["role"] = $this->user_role;
+
+                        return true;
+
+                    }else{
+                        echo "Erreur de connexion";
+                        return true;
+                    }
+                }else{
+                    "<div class='alert alert-danger p-3'>Erreur lors de votre connexion, merci de verifié votre email et mot de passe 
+                        <a href='inscription'>Recommencer</a>
+                    </div>";
+                }
+            }else{
+                "<div class='alert alert-danger p-3'>Cette email est inconnu !
+                        <a href='inscription'>Recommencer</a>
+                    </div>";
+            }
+            return false;
+        }
+
+
     }
 
 ?>
